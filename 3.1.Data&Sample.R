@@ -9,7 +9,7 @@ library(FinTS) #AutocorTest #ArchTest
 
 ### Functions ###
 
-descriptive.stats = function(x)
+descriptiveStats = function(x)
   #Returns descriptive statistics of the data set x
 {
   output = vector(length = 7)
@@ -26,7 +26,7 @@ descriptive.stats = function(x)
   return (output)
 }
 
-norm.tests = function(x)
+normTests = function(x)
   #Returns the test statistics and the p-values of the Jarque-Bera test for normality,
   #D'Agostino test of skewness and Anscombe-Glynn test of kurtosis of the data set x
 {
@@ -43,7 +43,7 @@ norm.tests = function(x)
   return (output)
 }
 
-corr.test = function(x, y = c(), n = 1){
+corrTest = function(x, y = c(), n = 1){
   #1) Calculates the statistics and p-values of the Ljung-Box and LM tests on the data set x.
   #2) Calculates the statistics and p-values of the Ljung-Box and LM tests on for n rolling windows.
   #2.1) The first data set is x.
@@ -73,7 +73,6 @@ corr.test = function(x, y = c(), n = 1){
 }
 
 
-
 ### Data and Sample Analysis ###
 
 #input = imported dataframe with the dates in the first column and the daily index levels on the second
@@ -84,56 +83,57 @@ corr.test = function(x, y = c(), n = 1){
 returns = diff(log(input[,2]))*100
 dates = as.Date(input[,1])[2:length(input[,1])]
 rm(input)
-ret.zoo = zoo(returns, dates)
+retZoo = zoo(returns, dates)
 rm(returns)
 
 #Plot of the daily log returns of the index (Figure 3.1)
 par(mfrow=c(1,1))
 par(mar = c(3,4,2,2))
-chart.TimeSeries(ret.zoo, lwd = 1.5, ylab ="", xlab ="", date.format = "%Y-%m-%d" , font.main = 1, ylim = c(-5.5,5))
+chart.TimeSeries(retZoo, lwd = 1.5, ylab ="", xlab ="", date.format = "%Y-%m-%d" , font.main = 1, ylim = c(-5.5,5))
 
 #Random generated sample from a normal distribution with same mean and standard deviation
-norm.dist = rnorm(1000000, mean = mean(ret.zoo), sd = sd(ret.zoo)) 
+normDist = rnorm(1000000, mean = mean(retZoo), sd = sd(retZoo)) 
 
 #Plot of the empirical density of the daily log returns against the one of a normal distribution with same mean and
 #standard deviation (Figure 3.2 - (a))
 par(mfrow=c(1,2))
-plot(density(ret.zoo), type = "l", xlab = "" , ylab = "", main = "(a)", lwd=1.5, font.main = 1)
-lines(density(norm.dist), type="l", lty="dotted", lwd=1.5)
+plot(density(retZoo), type = "l", xlab = "" , ylab = "", main = "(a)", lwd=1.5, font.main = 1)
+lines(density(normDist), type="l", lty="dotted", lwd=1.5)
 abline(v=0)
-rm(norm.dist)
+rm(normDist)
 
 #Normal Quantile-Quantile plot of the daily log returns (Figure 3.2 - (b))
-qqnorm(ret.zoo, xlab = "" , ylab = "", main = "(b)", font.main = 1)
-qqline(ret.zoo)
+qqnorm(retZoo, xlab = "" , ylab = "", main = "(b)", font.main = 1)
+qqline(retZoo)
 
 #Derscriptite statistics of the daily log returns (Table 3.1)
-descriptive.stats(ret.zoo)
-rm(descriptive.stats)
+descriptiveStats(retZoo)
+rm(descriptiveStats)
 
 #Jarque-Bera test for normality, D'Agostino test of skewness and Anscombe-Glynn test of 
 #kurtosis of the daily log returns
-norm.tests(ret.zoo)
-rm(norm.tests)
+normTests(retZoo)
+rm(normTests)
 
 #Split ret.zoo in 2 zoo objects: first with return data from 2009-2012 and the second with the one of 2013
-ret0912.zoo = ret.zoo[1:1008]
-ret13.zoo = ret.zoo[1009:length(ret.zoo)]
-rm(ret.zoo)
+ret0912 = retZoo[1:1008]
+ret13 = retZoo[1009:length(retZoo)]
+rm(retZoo)
 
 #Plot of the p-values of the Ljung-Box and Lagrange Multiplier tests of the daily log returns 253 sub-samples (Figure 3.3)
-ret.corr = corr.test(ret0912.zoo, ret13.zoo, 253)
-ret13.dates = dates[1009:length(dates)]
-retlb.zoo = zoo(ret.corr[,2], ret13.dates)
-retlm.zoo = zoo(ret.corr[,4], ret13.dates)
+retCorr = corrTest(ret0912, ret13, 253)
+ret13Dates = dates[1009:length(dates)]
+retlb = zoo(retCorr[,2], ret13Dates)
+retlm = zoo(retCorr[,4], ret13Dates)
 rm(dates)
-rm(ret.corr)
+rm(retCorr)
+rm(corrTest)
 
 par(mfrow=c(2,1))
-chart.TimeSeries(retlb.zoo, lwd = 1.5, ylab ="(a)", xlab ="", date.format = "%Y-%m-%d" , font.main = 1, , type="p", ylim = c(0,1))
+chart.TimeSeries(retlb, lwd = 1.5, ylab ="(a)", xlab ="", date.format = "%Y-%m-%d" , font.main = 1, , type="p", ylim = c(0,1))
 abline(a=0.05, b=0, lwd = 1.5, lty = "dashed")
-rm(retlb.zoo)
+rm(retlb)
 
-chart.TimeSeries(retlm.zoo, lwd = 1.5, ylab ="(b)", xlab ="", date.format = "%Y-%m-%d" , font.main = 1, , type="p", ylim = c(0,1))
+chart.TimeSeries(retlm, lwd = 1.5, ylab ="(b)", xlab ="", date.format = "%Y-%m-%d" , font.main = 1, , type="p", ylim = c(0,1))
 abline(a=0.05, b=0, lwd = 1.5, lty = "dashed")
-rm(retlm.zoo)
+rm(retlm)
