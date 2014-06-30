@@ -1,3 +1,11 @@
+### Packages ###
+
+library(fGarch) #garchFit
+library(tseries) #arma
+
+
+### Run Methods ###
+
 empiricalDist = function (x, y, b, n, method){
   
   output = matrix(data = vector(length = b * n) , nrow = b, ncol = n)
@@ -20,3 +28,4 @@ empiricalDist = function (x, y, b, n, method){
 }
 
 PRRdensities = empiricalDist(ret0912, ret13, 1000, 253, PRR)
+save.image(file = "thesis.RData")

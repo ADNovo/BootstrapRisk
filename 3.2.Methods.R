@@ -1,13 +1,51 @@
-### Packages ###
-
-library(fGarch) #garchFit
-library(tseries) #arma
-
-
 ### Methods ###
 
+HS = function(x,b){
+  #Empirical distribution of historical simulation is equal to the one of the past observed data
+  return (as.vector(x))
+}
+
+FHS = function(x, b){
+  
+  #Performs the bootstrap method of the Filtered Historical Simulation for one-step ahead conditional return forecasts
+  #x = data 
+  #b = number of bootstrap replicates
+  
+  #Step 1
+  x = data.frame(x)
+  garch = garchFit(formula = ~garch(1,1), data = x, include.mean = FALSE, trace = FALSE)
+  omega = garch@fit$coef[1]
+  alpha = garch@fit$coef[2]
+  beta = garch@fit$coef[3]
+  
+  #Step 2
+  #e = standardized residual series
+  e = garch@residuals / garch@sigma.t
+  
+  #Steps 3
+  #yForecasts = vector with the b conditional return forecasts
+  yForecasts = vector(length = b)
+  
+  for (i in seq(b)){
+    
+    ##Step 3   
+    quotient = omega / (1 - alpha - beta) #equation 2.13
+    sigmak = quotient #equation 2.13
+    
+    for (j in seq(0,length(e)-2)){ #equation 2.13
+      sigmak = sigmak + alpha * beta^(j) * (x[length(e)-j-1,]^2 - quotient)
+    }  
+    
+    yk = (x[length(e),]) #last observation from x  
+    sigmak = omega + alpha * yk^2 + beta * sigmak #equation 2.11
+    yk = sqrt(sigmak) * sample(e, 1) #equation 2.12  
+    yForecasts[i] = yk
+  } 
+  return(yForecasts)
+}
+
 PRR = function (x, b){
-  #Performs the bootstrap method of Chen et al. (2011) for one-step ahead conditional return forecasts
+  #Performs the bootstrap method of Pascual et al. (2006) for one-step ahead conditional return forecasts
   #x = data 
   #b = number of bootstrap replicates
   
@@ -67,7 +105,7 @@ PRR = function (x, b){
       sigmak = sigmak + Ralpha * Rbeta^(j) * (Ry[length(e)-j-1]^2 - quotient)
     }  
     
-    yk = (x[length(Ry),]) #last observation from x  
+    yk = (x[length(e),]) #last observation from x  
     sigmak = Romega + Ralpha * yk^2 + Rbeta * sigmak #equation 2.10
     yk = sqrt(sigmak) * sample(e, 1) #equation 2.11  
     yForecasts[i] = yk
@@ -130,7 +168,7 @@ USB = function (x, b){
              
     ## Step 7
     #yk = conditional squared return forecast       
-    yk = (x[length(Ry),])^2 #last observation from x  
+    yk = (x[length(e),])^2 #last observation from x  
     yk = Romega + Ralphabeta * yk + RvCent[length(RvCent)] - Rbeta * RvCent[length(RvCent)-1] #equation 2.18
       
     #Repeat Steps 4 to 7, until conditional squared return forecast is positive
