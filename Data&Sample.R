@@ -44,7 +44,7 @@ normTests = function(x)
 
 corrTest = function(x, y = c(), n = 1){
   #1) Calculates the statistics and p-values of the Ljung-Box and LM tests on the data set x.
-  #2) Calculates the statistics and p-values of the Ljung-Box and LM tests on for n rolling windows.
+  #2) Calculates the statistics and p-values of the Ljung-Box and LM tests for n rolling windows.
   #2.1) The first data set is x.
   #2.2) The subsequent ones are obtained by dropping the first observation of the previous set and 
   #adding the first observation of y not yet added.
