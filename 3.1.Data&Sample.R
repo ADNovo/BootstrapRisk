@@ -6,7 +6,6 @@ library(tseries) #jarque.bera.test
 library(FinTS) #AutocorTest #ArchTest
 
 
-
 ### Functions ###
 
 descriptiveStats = function(x)
