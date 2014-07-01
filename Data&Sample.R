@@ -8,9 +8,9 @@ library(FinTS) #AutocorTest #ArchTest
 
 ### Functions ###
 
-descriptiveStats = function(x)
+descriptiveStats = function(x){
   #Returns descriptive statistics of the data set x
-{
+
   output = vector(length = 7)
   names(output) = c("Mean", "Median", "Min", "Max", "Std. Dev.", "Skewness", "Kurtosis")
   
@@ -25,10 +25,10 @@ descriptiveStats = function(x)
   return (output)
 }
 
-normTests = function(x)
+normTests = function(x){
   #Returns the test statistics and the p-values of the Jarque-Bera test for normality,
   #D'Agostino test of skewness and Anscombe-Glynn test of kurtosis of the data set x
-{
+
   output = vector(length = 6)
   names(output) = c("JB Statistic", "JB p-value", "DA Statistic", "DA p-value", "AG Statistic", "AG p-value")
   
@@ -81,9 +81,7 @@ corrTest = function(x, y = c(), n = 1){
 #Build zoo object with returns and dates
 returns = diff(log(input[,2]))*100
 dates = as.Date(input[,1])[2:length(input[,1])]
-rm(input)
 retZoo = zoo(returns, dates)
-rm(returns)
 
 #Plot of the daily log returns of the index (Figure 3.1)
 par(mfrow=c(1,1))
@@ -99,7 +97,6 @@ par(mfrow=c(1,2))
 plot(density(retZoo), type = "l", xlab = "" , ylab = "", main = "(a)", lwd=1.5, font.main = 1)
 lines(density(normDist), type="l", lty="dotted", lwd=1.5)
 abline(v=0)
-rm(normDist)
 
 #Normal Quantile-Quantile plot of the daily log returns (Figure 3.2 - (b))
 qqnorm(retZoo, xlab = "" , ylab = "", main = "(b)", font.main = 1)
@@ -107,32 +104,26 @@ qqline(retZoo)
 
 #Derscriptite statistics of the daily log returns (Table 3.1)
 descriptiveStats(retZoo)
-rm(descriptiveStats)
 
 #Jarque-Bera test for normality, D'Agostino test of skewness and Anscombe-Glynn test of 
 #kurtosis of the daily log returns
 normTests(retZoo)
-rm(normTests)
 
 #Split ret.zoo in 2 zoo objects: first with return data from 2009-2012 and the second with the one of 2013
 ret0912 = retZoo[1:1008]
 ret13 = retZoo[1009:length(retZoo)]
-rm(retZoo)
 
 #Plot of the p-values of the Ljung-Box and Lagrange Multiplier tests of the daily log returns 253 sub-samples (Figure 3.3)
 retCorr = corrTest(ret0912, ret13, 253)
 ret13Dates = dates[1009:length(dates)]
 retlb = zoo(retCorr[,2], ret13Dates)
 retlm = zoo(retCorr[,4], ret13Dates)
-rm(dates)
-rm(retCorr)
-rm(corrTest)
 
 par(mfrow=c(2,1))
 chart.TimeSeries(retlb, lwd = 1.5, ylab ="(a)", xlab ="", date.format = "%Y-%m-%d" , font.main = 1, , type="p", ylim = c(0,1))
 abline(a=0.05, b=0, lwd = 1.5, lty = "dashed")
-rm(retlb)
 
 chart.TimeSeries(retlm, lwd = 1.5, ylab ="(b)", xlab ="", date.format = "%Y-%m-%d" , font.main = 1, , type="p", ylim = c(0,1))
 abline(a=0.05, b=0, lwd = 1.5, lty = "dashed")
-rm(retlm)
+
+rm(input, returns, normDist, descriptiveStats, normTests, retZoo, dates, retCorr, corrTest, retlb, retlm)
