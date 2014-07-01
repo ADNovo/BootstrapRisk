@@ -16,10 +16,8 @@ source("Backtests.R") #exceptions #LRcc #LRind #LRuc #accuracy #qlf #rlf #sStati
 PRRdensities = empiricalDist(ret0912, ret13, 1000, 253, PRR)
 USBdensities = empiricalDist(ret0912, ret13, 1000, 253, USB)
 FHSdensities = empiricalDist(ret0912, ret13, 1000, 253, FHS)
-
-ret1112 = ret0912[506:length(ret0912)]
-HSdensities = empiricalDist(ret1112, ret13, length(ret1112), 253, HS)
-rm(ret0912, ret1112, FHS, HS, PRR, USB, empiricalDist)
+HSdensities = empiricalDist(ret0912, ret13, length(ret0912), 253, HS)
+rm(ret0912, FHS, HS, PRR, USB, empiricalDist)
 
 #Estimate VaR and ES
 PRRrisk = risk(PRRdensities, 0.01, "PRR")
@@ -65,4 +63,5 @@ RCtest(PRRriskzoo, PRRdensities, ret13, 0.01)
 USBempirical = apply(rbind(-sqrt(USBdensities), sqrt(USBdensities)), 2, sort)
 RCtest(USBriskzoo, USBempirical, ret13, 0.01)
 RCtest(FHSriskzoo, FHSdensities, ret13, 0.01)
+RCtest(HSriskzoo, HSdensities, ret13, 0.01)
 rm(USBempirical, exceptions, RCtest)

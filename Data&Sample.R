@@ -113,6 +113,9 @@ normTests(retZoo)
 ret0912 = retZoo[1:1008]
 ret13 = retZoo[1009:length(retZoo)]
 
+#Ljung-Box and Lagrange Multiplier tests of the daily log returns sample
+corrTest(retZoo, 1)
+
 #Plot of the p-values of the Ljung-Box and Lagrange Multiplier tests of the daily log returns 253 sub-samples (Figure 3.3)
 retCorr = corrTest(ret0912, ret13, 253)
 ret13Dates = dates[1009:length(dates)]
