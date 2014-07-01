@@ -20,7 +20,7 @@ descriptiveStats = function(x){
   output[4] = max(x)
   output[5] = sd(x)
   output[6] = skewness(x)
-  output[7] = kurtosis(x)
+  output[7] = kurtosis(x) + 3
   
   return (output)
 }
@@ -102,7 +102,7 @@ abline(v=0)
 qqnorm(retZoo, xlab = "" , ylab = "", main = "(b)", font.main = 1)
 qqline(retZoo)
 
-#Derscriptite statistics of the daily log returns (Table 3.1)
+#Descriptive statistics of the daily log returns (Table 3.1)
 descriptiveStats(retZoo)
 
 #Jarque-Bera test for normality, D'Agostino test of skewness and Anscombe-Glynn test of 
