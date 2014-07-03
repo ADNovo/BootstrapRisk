@@ -16,7 +16,7 @@ exceptions = function(VaR, returns){
 
 
 LRuc = function(excepts, alpha){
-  #Generates Kupiec Unconditional Coverage Test statistic - equation 2.22
+  #Generates Kupiec Unconditional Coverage Test statistic - equation 2.28
   #excepts = vector with 0's in the days in which exceptions do not occur
   #and the daily return in the ones where they do
   #alpha = alpha used in the VaR estimation
@@ -30,7 +30,7 @@ LRuc = function(excepts, alpha){
 
 
 LRind = function(excepts){
-  #Generates Christoffersen Serial Independence Test statistic - equation 2.23
+  #Generates Christoffersen Serial Independence Test statistic - equation 2.29
   #excepts = vector with 0's in the days in which exceptions do not occur
   #and the daily return in the ones where they do
   
@@ -64,7 +64,7 @@ LRind = function(excepts){
 
 
 LRcc = function(excepts, alpha){
-  #Generates Christoffersen Conditional Coverage Test statistic - equation 2.24
+  #Generates Christoffersen Conditional Coverage Test statistic - equation 2.30
   #exceptions = vector with 0's in the days in which exceptions do not occur
   #and the daily return in the ones where they do
   #alpha = alpha used in the VaR estimation
@@ -103,7 +103,7 @@ accuracyVaR = function(VaR, returns, alpha){
 
 
 rlf = function(VaR, returns, alpha){
-  #Generates a vector with Sarma et al. (2003) Cm,t for each trading day in var - equation 2.27
+  #Generates a vector with Sarma et al. (2003) Cm,t for each trading day in var - equation 2.33
   #VaR = Value-at-Risk estimates for n days
   #returns = daily returns data of the n days
   #alpha = alpha used in the VaR estimation
@@ -120,7 +120,7 @@ rlf = function(VaR, returns, alpha){
 
 
 qlf = function(VaR, returns, alpha){
-  #Generates a vector with Angelidis(2004) Cm,t for each trading day in var - equation 2.33
+  #Generates a vector with Angelidis(2004) Cm,t for each trading day in var - equation 2.35
   #VaR = Value-at-Risk estimates for n days
   #returns = daily returns data of the n days
   #alpha = alpha used in the VaR estimation

@@ -45,6 +45,13 @@ chart.TimeSeries(HSriskzoo, lwd = 1.5, ylab = "(b)", xlab = "", main = "", date.
 ### Backtesting ###
 
 #VaR Accuracy Backtests
+par(mfrow=c(2,1))
+par(mar=c(3,4,2,2))
+chart.TimeSeries(cbind(ret13,PRRriskzoo[,1]), lwd = 1.5, ylab = "(a)", xlab = "", main = "", date.format = "%Y-%m-%d" , font.main = 1, ylim = c(-3.5,4.5),lty = c("solid", "dotted"), col=c("black","black"))
+chart.TimeSeries(cbind(ret13,USBriskzoo[,1]), lwd = 1.5, ylab = "(b)", xlab = "", main = "", date.format = "%Y-%m-%d" , font.main = 1, ylim = c(-3.5,4.5),lty = c("solid", "dotted"), col=c("black","black"))
+chart.TimeSeries(cbind(ret13,FHSriskzoo[,1]), lwd = 1.5, ylab = "(a)", xlab = "", main = "", date.format = "%Y-%m-%d" , font.main = 1, ylim = c(-3.5,4.5),lty = c("solid", "dotted"), col=c("black","black"))
+chart.TimeSeries(cbind(ret13,HSriskzoo[,1]), lwd = 1.5, ylab = "(b)", xlab = "", main = "", date.format = "%Y-%m-%d" , font.main = 1, ylim = c(-3.5,4.5),lty = c("solid", "dotted"), col=c("black","black"))
+
 accuracyVaR(PRRriskzoo[,1], ret13, 0.01)
 accuracyVaR(USBriskzoo[,1], ret13, 0.01)
 accuracyVaR(FHSriskzoo[,1], ret13, 0.01)
