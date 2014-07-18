@@ -34,10 +34,10 @@ normTests = function(x){
   
   output[1] = jarque.bera.test(x)$statistic
   output[2] = jarque.bera.test(x)$p.value
-  output[3] = agostino.test(x, alternative = "greater")$statistic[2]
-  output[4] = agostino.test(x, alternative = "greater")$p.value
-  output[5] = anscombe.test(x, alternative = "less")$statistic[2]
-  output[6] = anscombe.test(x, alternative = "less")$p.value
+  output[3] = agostino.test(x)$statistic[2]
+  output[4] = agostino.test(x)$p.value
+  output[5] = anscombe.test(x)$statistic[2]
+  output[6] = anscombe.test(x)$p.value
   
   return (output)
 }
