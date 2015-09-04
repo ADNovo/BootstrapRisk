@@ -80,7 +80,7 @@ corrTest = function(x, y = c(), n = 1){
 #Coerce dates to date format and drop the first
 #Build zoo object with returns and dates
 returns = diff(log(input[,2]))*100
-dates = as.Date(input[,1])[2:length(input[,1])]
+dates = as.Date(input[,1], "%d-%m-%Y")[2:length(input[,1])]
 retZoo = zoo(returns, dates)
 
 #Plot of the daily log returns of the index (Figure 3.1)
