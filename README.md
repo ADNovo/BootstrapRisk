@@ -3,7 +3,7 @@ BootstrapRisk
 
 **Backtesting Bootstrap Value-at-Risk and Expected Shortfall estimates in GARCH models** (Master Dissertation)
 
-1 - Data & Sample: Data Wrangling and Analysis <br/>
+1 - Data & Sample: Data wrangling and analysis <br/>
 
 2 - Methods: Risk estimation methods
 
