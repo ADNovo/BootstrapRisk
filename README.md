@@ -1,7 +1,7 @@
 BootstrapRisk
 =============
 
-**Master Dissertation - Backtesting Bootstrap Value-at-Risk and Expected Shortfall estimates in GARCH models**
+**Backtesting Bootstrap Value-at-Risk and Expected Shortfall estimates in GARCH models** (Master Dissertation)
 
 1 - Data & Sample: Data Wrangling and Analysis <br/>
 
