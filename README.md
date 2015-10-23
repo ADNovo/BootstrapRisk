@@ -2,13 +2,10 @@
 
 Full Version: http://repositorio-aberto.up.pt/bitstream/10216/76673/2/102406.pdf
 
-Data & Sample: Data wrangling and analysis
-
-Methods: Risk estimation methods
-
-Backtests: Backtesting methods
-
-Implementation&Backtesting: Implementation of risk estimation and backtesting methods
+data_sample.R: Data wrangling and analysis
+methods.R: Risk estimation methods
+backtests.R: Backtesting methods
+implementation_backtesting.R: Implementation of risk estimation and backtesting methods
 
 **Abstract**
 
